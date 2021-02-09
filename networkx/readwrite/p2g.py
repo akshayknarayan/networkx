@@ -55,7 +55,7 @@ def write_p2g(G, path, encoding = 'utf-8'):
     path.write(("%s %s\n"%(G.order(),G.size())).encode(encoding))
     nodes = G.nodes()
     # make dictionary mapping nodes to integers
-    nodenumber=dict(zip(nodes,range(len(nodes)))) 
+    nodenumber=dict(list(zip(nodes,list(range(len(nodes)))))) 
     for n in nodes:
         path.write(("%s\n"%n).encode(encoding))
         for nbr in G.neighbors(n):
@@ -89,7 +89,7 @@ def parse_p2g(lines):
     description = next(lines).strip()
     # are multiedges (parallel edges) allowed?
     G=networkx.MultiDiGraph(name=description,selfloops=True)
-    nnodes,nedges=map(int,next(lines).split())
+    nnodes,nedges=list(map(int,next(lines).split()))
     nodelabel={}
     nbrs={}
     # loop over the nodes keeping track of node labels and out neighbors
@@ -98,7 +98,7 @@ def parse_p2g(lines):
         n=next(lines).strip()
         nodelabel[i]=n
         G.add_node(n)
-        nbrs[n]=map(int,next(lines).split())
+        nbrs[n]=list(map(int,next(lines).split()))
     # now we know all of the node labels so we can add the edges
     # with the correct labels        
     for n in G:

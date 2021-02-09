@@ -18,12 +18,12 @@ pathlengths=[]
 print("source vertex {target:length, }")
 for v in G.nodes():
     spl=single_source_shortest_path_length(G,v)
-    print('%s %s' % (v,spl))
-    for p in spl.values():
+    print(('%s %s' % (v,spl)))
+    for p in list(spl.values()):
         pathlengths.append(p)
 
 print('')
-print("average shortest path length %s" % (sum(pathlengths)/len(pathlengths)))
+print(("average shortest path length %s" % (sum(pathlengths)/len(pathlengths))))
 
 # histogram of path lengths 
 dist={}
@@ -35,14 +35,14 @@ for p in pathlengths:
 
 print('')
 print("length #paths")
-verts=dist.keys()
+verts=list(dist.keys())
 for d in sorted(verts):
-    print('%s %d' % (d,dist[d]))
+    print(('%s %d' % (d,dist[d])))
 
-print("radius: %d" % radius(G))
-print("diameter: %d" % diameter(G))
-print("eccentricity: %s" % eccentricity(G))
-print("center: %s" % center(G))
-print("periphery: %s" % periphery(G))
-print("density: %s" % density(G))
+print(("radius: %d" % radius(G)))
+print(("diameter: %d" % diameter(G)))
+print(("eccentricity: %s" % eccentricity(G)))
+print(("center: %s" % center(G)))
+print(("periphery: %s" % periphery(G)))
+print(("density: %s" % density(G)))
 

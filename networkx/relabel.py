@@ -141,7 +141,7 @@ def _relabel_copy(G, mapping):
                           for (n1,n2,d) in G.edges_iter(data=True)) 
 
     H.add_nodes_from(mapping.get(n,n) for n in G)
-    H.node.update(dict((mapping.get(n,n),d.copy()) for n,d in G.node.items()))
+    H.node.update(dict((mapping.get(n,n),d.copy()) for n,d in list(G.node.items())))
     H.graph.update(G.graph.copy())
 
     return H        
@@ -190,20 +190,20 @@ def convert_node_labels_to_integers(G, first_label=0, ordering="default",
 
     N=G.number_of_nodes()+first_label
     if ordering=="default":
-        mapping=dict(zip(G.nodes(),range(first_label,N)))
+        mapping=dict(list(zip(G.nodes(),list(range(first_label,N)))))
     elif ordering=="sorted":
         nlist=G.nodes()
         nlist.sort()
-        mapping=dict(zip(nlist,range(first_label,N)))
+        mapping=dict(list(zip(nlist,list(range(first_label,N)))))
     elif ordering=="increasing degree":
         dv_pairs=[(d,n) for (n,d) in G.degree_iter()]
         dv_pairs.sort() # in-place sort from lowest to highest degree
-        mapping=dict(zip([n for d,n in dv_pairs],range(first_label,N)))
+        mapping=dict(list(zip([n for d,n in dv_pairs],list(range(first_label,N)))))
     elif ordering=="decreasing degree":
         dv_pairs=[(d,n) for (n,d) in G.degree_iter()]
         dv_pairs.sort() # in-place sort from lowest to highest degree
         dv_pairs.reverse()
-        mapping=dict(zip([n for d,n in dv_pairs],range(first_label,N)))
+        mapping=dict(list(zip([n for d,n in dv_pairs],list(range(first_label,N)))))
     else:
         raise nx.NetworkXError('Unknown node ordering: %s'%ordering)
     H=relabel_nodes(G,mapping)

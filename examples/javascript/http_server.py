@@ -7,24 +7,24 @@ def load_url(path):
     httpd = StoppableHTTPServer(("127.0.0.1",PORT), handler)
     thread.start_new_thread(httpd.serve, ())
     webbrowser.open_new('http://localhost:%s/%s'%(PORT,path))
-    input("Press <RETURN> to stop server\n")
+    eval(input("Press <RETURN> to stop server\n"))
     httpd.stop()
-    print("To restart server run: \n%s"%server)
+    print(("To restart server run: \n%s"%server))
 
 
 if sys.version_info[0] == 2:
-    import SimpleHTTPServer, BaseHTTPServer
+    import http.server, http.server
     import socket
-    import thread
+    import _thread
     import webbrowser
-    handler = SimpleHTTPServer.SimpleHTTPRequestHandler
+    handler = http.server.SimpleHTTPRequestHandler
     input = raw_input
     server = "python -m SimpleHTTPServer 8000"
 
-    class StoppableHTTPServer(BaseHTTPServer.HTTPServer):
+    class StoppableHTTPServer(http.server.HTTPServer):
  
         def server_bind(self):
-            BaseHTTPServer.HTTPServer.server_bind(self)
+            http.server.HTTPServer.server_bind(self)
             self.socket.settimeout(1)
             self.run = True
  

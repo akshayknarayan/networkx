@@ -10,4 +10,4 @@ testrun.post_results_comment()
 
 print()
 print("Posted test results to pull request")
-print("  " + testrun.pr['html_url'])
+print(("  " + testrun.pr['html_url']))

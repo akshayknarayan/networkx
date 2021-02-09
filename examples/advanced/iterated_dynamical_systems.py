@@ -190,10 +190,10 @@ def fixed_points(G):
     
 if __name__ == "__main__":
     nmax=10000
-    print("Building cubing_153_digraph(%d)"% nmax)
+    print(("Building cubing_153_digraph(%d)"% nmax))
     G=cubing_153_digraph(nmax)
-    print("Resulting digraph has", len(G), "nodes and",
-          G.size()," edges")
+    print(("Resulting digraph has", len(G), "nodes and",
+          G.size()," edges"))
     print("Shortest path from 177 to 153 is:")
-    print(shortest_path(G,177,153))
-    print("fixed points are %s" % fixed_points(G))
+    print((shortest_path(G,177,153)))
+    print(("fixed points are %s" % fixed_points(G)))

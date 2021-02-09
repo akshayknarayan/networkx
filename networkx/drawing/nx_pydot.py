@@ -182,19 +182,19 @@ def to_pydot(N, strict=True):
         pass
 
     for n,nodedata in N.nodes_iter(data=True):
-        str_nodedata=dict((k,make_str(v)) for k,v in nodedata.items())
+        str_nodedata=dict((k,make_str(v)) for k,v in list(nodedata.items()))
         p=pydot.Node(make_str(n),**str_nodedata)
         P.add_node(p)
 
     if N.is_multigraph():
         for u,v,key,edgedata in N.edges_iter(data=True,keys=True):
-            str_edgedata=dict((k,make_str(v)) for k,v in edgedata.items())
+            str_edgedata=dict((k,make_str(v)) for k,v in list(edgedata.items()))
             edge=pydot.Edge(make_str(u),make_str(v),key=make_str(key),**str_edgedata)
             P.add_edge(edge)
         
     else:
         for u,v,edgedata in N.edges_iter(data=True):
-            str_edgedata=dict((k,make_str(v)) for k,v in edgedata.items())
+            str_edgedata=dict((k,make_str(v)) for k,v in list(edgedata.items()))
             edge=pydot.Edge(make_str(u),make_str(v),**str_edgedata)
             P.add_edge(edge)
 
@@ -258,12 +258,12 @@ def pydot_layout(G,prog='neato',root=None, **kwds):
     D=P.create_dot(prog=prog)
 
     if D=="":  # no data returned
-        print("Graphviz layout with %s failed"%(prog))
+        print(("Graphviz layout with %s failed"%(prog)))
         print()
         print("To debug what happened try:")
         print("P=pydot_from_networkx(G)")
         print("P.write_dot(\"file.dot\")")
-        print("And then run %s on file.dot"%(prog))
+        print(("And then run %s on file.dot"%(prog)))
         return
 
     Q=pydot.graph_from_dot_data(D)

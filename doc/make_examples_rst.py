@@ -44,7 +44,7 @@ def main(exampledir,sourcedir):
             relpath = os.path.split(root)[-1]
             datad.setdefault(relpath, []).append((fullpath, fname, contents))
 
-    subdirs = datad.keys()
+    subdirs = list(datad.keys())
     subdirs.sort()
     output_dir=os.path.join(sourcedir,'examples')
     if not os.path.exists(output_dir):
@@ -124,7 +124,7 @@ NetworkX Examples
                 not out_of_date(fullpath, outfile)):
                 continue
 
-            print '%s/%s'%(subdir,fname)
+            print('%s/%s'%(subdir,fname))
 
             fhstatic = file(static_file, 'w')
             fhstatic.write(contents)
@@ -167,13 +167,13 @@ if __name__ == '__main__':
         arg0,arg1,arg2=sys.argv[:3]
     except:
         arg0=sys.argv[0]
-        print """
+        print("""
 Usage:  %s exampledir sourcedir 
 
     exampledir: a directory containing the python code for the examples.
     sourcedir: a directory to put the generated documentation source for these examples.
 
-        """%arg0
+        """%arg0)
     else:
         main(arg1,arg2)
 

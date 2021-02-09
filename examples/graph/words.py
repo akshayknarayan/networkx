@@ -63,14 +63,14 @@ if __name__ == '__main__':
     G=words_graph()
     print("Loaded words_dat.txt containing 5757 five-letter English words.")
     print("Two words are connected if they differ in one letter.")
-    print("Graph has %d nodes with %d edges"
-          %(number_of_nodes(G),number_of_edges(G)))
-    print("%d connected components" % number_connected_components(G))
+    print(("Graph has %d nodes with %d edges"
+          %(number_of_nodes(G),number_of_edges(G))))
+    print(("%d connected components" % number_connected_components(G)))
 
     for (source,target) in [('chaos','order'),
                             ('nodes','graph'),
                             ('pound','marks')]:
-        print("Shortest path between %s and %s is"%(source,target))
+        print(("Shortest path between %s and %s is"%(source,target)))
         try:
             sp=shortest_path(G, source, target)
             for n in sp:

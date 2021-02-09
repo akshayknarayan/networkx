@@ -68,7 +68,7 @@ def spectral_bipartivity(G, nodes=None, weight='weight'):
         return coshA.diagonal().sum() / expA.diagonal().sum()
     else:
         # contribution for individual nodes
-        index = dict(zip(nodelist, range(len(nodelist))))
+        index = dict(list(zip(nodelist, list(range(len(nodelist))))))
         sb = {}
         for n in nodes:
             i = index[n]

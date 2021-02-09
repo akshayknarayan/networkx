@@ -153,7 +153,7 @@ def gnp_random_graph(n, p, seed=None, directed=False):
         G=nx.DiGraph()
     else:
         G=nx.Graph()
-    G.add_nodes_from(range(n))
+    G.add_nodes_from(list(range(n)))
     G.name="gnp_random_graph(%s,%s)"%(n,p)
     if p<=0:
         return G
@@ -164,9 +164,9 @@ def gnp_random_graph(n, p, seed=None, directed=False):
         random.seed(seed)
 
     if G.is_directed():
-        edges=itertools.permutations(range(n),2)
+        edges=itertools.permutations(list(range(n)),2)
     else:
-        edges=itertools.combinations(range(n),2)
+        edges=itertools.combinations(list(range(n)),2)
 
     for e in edges:
         if random.random() < p:        
@@ -258,7 +258,7 @@ def gnm_random_graph(n, m, seed=None, directed=False):
         G=nx.DiGraph()
     else:
         G=nx.Graph()
-    G.add_nodes_from(range(n))
+    G.add_nodes_from(list(range(n)))
     G.name="gnm_random_graph(%s,%s)"%(n,m)
 
     if seed is not None:
@@ -397,7 +397,7 @@ def watts_strogatz_graph(n, k, p, seed=None):
     # connect each node to k/2 neighbors
     for j in range(1, k // 2+1):
         targets = nodes[j:] + nodes[0:j] # first j nodes are now last in list
-        G.add_edges_from(zip(nodes,targets))
+        G.add_edges_from(list(zip(nodes,targets)))
     # rewire edges from each node
     # loop over all nodes in order (label) and neighbors in order (distance)
     # no self loops or multiple edges allowed
@@ -535,7 +535,7 @@ def random_regular_graph(d, n, seed=None):
             if not _suitable(edges, potential_edges):
                 return None # failed to find suitable edge set
 
-            stubs = [node for node, potential in potential_edges.items()
+            stubs = [node for node, potential in list(potential_edges.items())
                      for _ in range(potential)]
         return edges 
 
@@ -611,7 +611,7 @@ def barabasi_albert_graph(n, m, seed=None):
     source=m 
     while source<n: 
         # Add edges to m nodes from the source.
-        G.add_edges_from(zip([source]*m,targets)) 
+        G.add_edges_from(list(zip([source]*m,targets))) 
         # Add one node to the list for each new edge just created.
         repeated_nodes.extend(targets)
         # And the new node "source" has m edges to add to the list.

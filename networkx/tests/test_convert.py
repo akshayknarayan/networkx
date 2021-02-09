@@ -75,7 +75,7 @@ class TestConvert():
         e=G.edges()
         source=[u for u,v in e]
         dest=[v for u,v in e]
-        ex=zip(source,dest,source)
+        ex=list(zip(source,dest,source))
         G=Graph()
         G.add_weighted_edges_from(ex)
         

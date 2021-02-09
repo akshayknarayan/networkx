@@ -20,7 +20,7 @@ References.
 
 
 """
-from __future__ import print_function
+
 __author__ = """Brendt Wohlberg\nAric Hagberg (hagberg@lanl.gov)"""
 __date__ = "$Date: 2005-04-01 07:56:22 -0700 (Fri, 01 Apr 2005) $"
 __credits__ = """"""

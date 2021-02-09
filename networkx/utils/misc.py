@@ -120,13 +120,13 @@ def dict_to_numpy_array2(d,mapping=None):
           "dict_to_numpy_array requires numpy : http://scipy.org/ ")
     if mapping is None:
         s=set(d.keys())
-        for k,v in d.items():
-            s.update(v.keys())
-        mapping=dict(zip(s,range(len(s))))
+        for k,v in list(d.items()):
+            s.update(list(v.keys()))
+        mapping=dict(list(zip(s,list(range(len(s))))))
     n=len(mapping)
     a = numpy.zeros((n, n))
-    for k1, row in d.items():
-        for k2, value in row.items():
+    for k1, row in list(d.items()):
+        for k2, value in list(row.items()):
             i=mapping[k1]
             j=mapping[k2]
             a[i,j] = value
@@ -142,10 +142,10 @@ def dict_to_numpy_array1(d,mapping=None):
           "dict_to_numpy_array requires numpy : http://scipy.org/ ")
     if mapping is None:
         s = set(d.keys())
-        mapping = dict(zip(s,range(len(s))))
+        mapping = dict(list(zip(s,list(range(len(s))))))
     n = len(mapping)
     a = numpy.zeros(n)
-    for k1, value in d.items():
+    for k1, value in list(d.items()):
         i = mapping[k1]
         a[i] = value
     return a

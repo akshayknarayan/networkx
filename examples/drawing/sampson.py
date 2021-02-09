@@ -13,14 +13,14 @@ __author__ = """Aric Hagberg (hagberg@lanl.gov)"""
 #    All rights reserved.
 #    BSD license.
 
-import zipfile, cStringIO
+import zipfile, io
 import networkx as nx
 import matplotlib.pyplot as plt
 
 zf = zipfile.ZipFile('sampson_data.zip') # zipfile object
-e1=cStringIO.StringIO(zf.read('samplike1.txt')) # read info file
-e2=cStringIO.StringIO(zf.read('samplike2.txt')) # read info file
-e3=cStringIO.StringIO(zf.read('samplike3.txt')) # read info file
+e1=io.StringIO(zf.read('samplike1.txt')) # read info file
+e2=io.StringIO(zf.read('samplike2.txt')) # read info file
+e3=io.StringIO(zf.read('samplike3.txt')) # read info file
 G1=nx.read_edgelist(e1,delimiter='\t')
 G2=nx.read_edgelist(e2,delimiter='\t')
 G3=nx.read_edgelist(e3,delimiter='\t')

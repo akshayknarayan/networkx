@@ -215,7 +215,7 @@ def weighted_choice(mapping):
     """
     # use roulette method
     rnd = random.random() * sum(mapping.values())
-    for k, w in mapping.items():
+    for k, w in list(mapping.items()):
         rnd -= w
         if rnd < 0:
             return k

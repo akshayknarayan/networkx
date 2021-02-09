@@ -199,9 +199,9 @@ class GEXF(object):
            (str,"liststring"),
            (str,"anyURI"),
            (str,"string"),
-           (unicode,"liststring"),
-           (unicode,"anyURI"),
-           (unicode,"string")])
+           (str,"liststring"),
+           (str,"anyURI"),
+           (str,"string")])
 
     xml_type = dict(types)
     python_type = dict(reversed(a) for a in types)
@@ -367,7 +367,7 @@ class GEXFWriter(GEXF):
             mode='dynamic'
         else:
             mode='static'
-        for k,v in data.items():
+        for k,v in list(data.items()):
             # rename generic multigraph key to avoid any name conflict
             if k == 'key':
                 k='networkx_key'
@@ -884,7 +884,7 @@ def relabel_gexf_graph(G):
         raise nx.NetworkXError('Failed to relabel nodes: '
                                'missing node labels found. '
                                'Use relabel=False.')
-    x,y=zip(*mapping)
+    x,y=list(zip(*mapping))
     if len(set(y))!=len(G):
         raise nx.NetworkXError('Failed to relabel nodes: '
                                'duplicate node labels found. '

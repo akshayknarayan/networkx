@@ -50,7 +50,7 @@ class TestShp(object):
         for path, name in zip(self.paths, self.names):
             feat = ogr.Feature(lyr.GetLayerDefn())
             g = ogr.Geometry(ogr.wkbLineString)
-            map(lambda xy: g.AddPoint_2D(*xy), path)
+            list(map(lambda xy: g.AddPoint_2D(*xy), path))
             feat.SetGeometry(g)
             feat.SetField("Name", name)
             lyr.CreateFeature(feat)
@@ -60,7 +60,7 @@ class TestShp(object):
 
     def testload(self):
         expected = nx.DiGraph()
-        map(expected.add_path, self.paths)
+        list(map(expected.add_path, self.paths))
         G = nx.read_shp(self.shppath)
         assert_equal(sorted(expected.node), sorted(G.node))
         assert_equal(sorted(expected.edges()), sorted(G.edges()))
@@ -101,7 +101,7 @@ class TestShp(object):
             while feature:
                 coords = []
                 ref = feature.GetGeometryRef()
-                for i in xrange(ref.GetPointCount()):
+                for i in range(ref.GetPointCount()):
                     coords.append(ref.GetPoint_2D(i))
                 name = feature.GetFieldAsString('Name')
                 assert_equal(graph.get_edge_data(*coords)['Name'], name)

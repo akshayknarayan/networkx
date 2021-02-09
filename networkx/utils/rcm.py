@@ -123,7 +123,7 @@ def connected_cuthill_mckee_ordering(G, start=None):
                 yield child
                 visited.add(child)
                 # add children to stack, sorted by degree (lowest first)
-                nd = sorted(G.degree(G[child]).items(), key=itemgetter(1))
+                nd = sorted(list(G.degree(G[child]).items()), key=itemgetter(1))
                 children = (n for n,d in nd)
                 stack.append((child,children))
         except StopIteration:
@@ -144,7 +144,7 @@ def find_pseudo_peripheral_node_pair(G, start=None):
         if l <= lp: 
             break
         lp = l
-        farthest = [n for n,dist in spl.items() if dist==l]
-        v, deg = sorted(G.degree(farthest).items(), key=itemgetter(1))[0]
+        farthest = [n for n,dist in list(spl.items()) if dist==l]
+        v, deg = sorted(list(G.degree(farthest).items()), key=itemgetter(1))[0]
     return u, v
     

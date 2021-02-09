@@ -28,7 +28,7 @@ G=gnm_random_graph(n,m)
 # some properties
 print("node degree clustering")
 for v in nodes(G):
-    print('%s %d %f' % (v,degree(G,v),clustering(G,v)))
+    print(('%s %d %f' % (v,degree(G,v),clustering(G,v))))
 
 # print the adjacency list to terminal 
 try:

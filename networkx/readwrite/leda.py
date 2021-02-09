@@ -91,7 +91,7 @@ def parse_leda(lines):
         if symbol=="": symbol=str(i) # use int if no label - could be trouble
         node[i]=symbol
 
-    G.add_nodes_from([s for i,s in node.items()])
+    G.add_nodes_from([s for i,s in list(node.items())])
 	
     # Edges
     m = int(next(lines)) # number of edges

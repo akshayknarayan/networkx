@@ -148,9 +148,9 @@ if __name__ == "__main__":
     print('') 
     print("Member #Friends")
     for v in W:
-        print('%s %d' % (v,W.degree(v)))
+        print(('%s %d' % (v,W.degree(v))))
 
     print('') 
     print("Clubs #Members")
     for v in C:
-        print('%s %d' % (v,C.degree(v)))
+        print(('%s %d' % (v,C.degree(v))))

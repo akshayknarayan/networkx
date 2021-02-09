@@ -53,7 +53,7 @@ def adjacency_data(G):
     for n,nbrdict in G.adjacency_iter():
         data['nodes'].append(dict(id=n, **G.node[n]))
         adj = []
-        for nbr,d in nbrdict.items():
+        for nbr,d in list(nbrdict.items()):
             adj.append(dict(id=nbr, **d))
         data['adjacency'].append(adj)
     return data

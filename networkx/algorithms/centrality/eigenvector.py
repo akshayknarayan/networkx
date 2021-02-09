@@ -89,7 +89,7 @@ def eigenvector_centrality(G,max_iter=100,tol=1.0e-6,nstart=None):
                 x[n]+=xlast[nbr]*G[n][nbr].get('weight',1)
         # normalize vector
         try:
-            s=1.0/sqrt(sum(v**2 for v in x.values()))
+            s=1.0/sqrt(sum(v**2 for v in list(x.values())))
         # this should never be zero?
         except ZeroDivisionError:
             s=1.0
@@ -155,7 +155,7 @@ def eigenvector_centrality_numpy(G):
     # eigenvector of largest eigenvalue at ind[0], normalized
     largest=np.array(eigenvectors[:,ind[0]]).flatten().real
     norm=np.sign(largest.sum())*np.linalg.norm(largest)
-    centrality=dict(zip(G,map(float,largest/norm)))
+    centrality=dict(list(zip(G,list(map(float,largest/norm)))))
     return centrality
 
 

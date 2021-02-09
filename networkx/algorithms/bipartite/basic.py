@@ -86,11 +86,11 @@ def biadjacency_matrix(G, row_order, column_order=None,
                           'http://scipy.org/')
     if column_order is None:
         column_order = list(set(G) - set(row_order))
-    row = dict(zip(row_order,count()))
-    col = dict(zip(column_order,count()))
+    row = dict(list(zip(row_order,count())))
+    col = dict(list(zip(column_order,count())))
     M = np.zeros((len(row),len(col)), dtype=dtype)
     for u in row_order:
-        for v, d in G[u].items():
+        for v, d in list(G[u].items()):
             M[row[u],col[v]] = d.get(weight, 1)
     return np.asmatrix(M)
 

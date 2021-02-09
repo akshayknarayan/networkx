@@ -17,10 +17,10 @@ import networkx as nx
 z=nx.utils.create_degree_sequence(100,nx.utils.powerlaw_sequence,exponent=2.1)
 nx.is_valid_degree_sequence(z)
 
-print "Configuration model"
+print("Configuration model")
 G=nx.configuration_model(z)  # configuration model
 
-degree_sequence=sorted(nx.degree(G).values(),reverse=True) # degree sequence
+degree_sequence=sorted(list(nx.degree(G).values()),reverse=True) # degree sequence
 #print "Degree sequence", degree_sequence
 dmax=max(degree_sequence)
 

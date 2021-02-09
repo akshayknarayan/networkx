@@ -241,7 +241,7 @@ def minimum_node_cut(G, s=None, t=None):
     # Choose a node with minimum degree
     deg = G.degree()
     min_deg = min(deg.values())
-    v = next(n for n,d in deg.items() if d == min_deg)
+    v = next(n for n,d in list(deg.items()) if d == min_deg)
     # Initial node cutset is all neighbors of the node with minimum degree
     min_cut = set(G[v])
     # Reuse the auxiliary digraph
@@ -341,7 +341,7 @@ def minimum_edge_cut(G, s=None, t=None):
         # Initial cutset is all edges of a node with minimum degree
         deg = G.degree()
         min_deg = min(deg.values())
-        node = next(n for n,d in deg.items() if d==min_deg)
+        node = next(n for n,d in list(deg.items()) if d==min_deg)
         min_cut = G.edges(node)
         nodes = G.nodes()
         n = len(nodes)
@@ -362,7 +362,7 @@ def minimum_edge_cut(G, s=None, t=None):
         # Initial cutset is all edges of a node with minimum degree
         deg = G.degree()
         min_deg = min(deg.values())
-        node = next(n for n,d in deg.items() if d==min_deg)
+        node = next(n for n,d in list(deg.items()) if d==min_deg)
         min_cut = G.edges(node)
         # A dominating set is \lambda-covering
         # We need a dominating set with at least two nodes

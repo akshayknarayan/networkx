@@ -297,7 +297,7 @@ def node_connectivity(G, s=None, t=None):
     K = G.order()-1
     deg = G.degree()
     min_deg = min(deg.values())
-    v = next(n for n,d in deg.items() if d==min_deg)
+    v = next(n for n,d in list(deg.items()) if d==min_deg)
     # Reuse the auxiliary digraph
     H, mapping = _aux_digraph_node_connectivity(G)
     # compute local node connectivity with all non-neighbors nodes

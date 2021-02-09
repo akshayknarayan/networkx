@@ -34,7 +34,7 @@ import networkx as nx
 from networkx.utils import open_file
 
 try:
-    import cPickle as pickle
+    import pickle as pickle
 except ImportError:
     import pickle
 

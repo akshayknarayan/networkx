@@ -62,7 +62,7 @@ def test_ra_clustering_square():
 def test_ra_clustering_zero():
     G = nx.Graph()
     assert_equal(bipartite.robins_alexander_clustering(G), 0)
-    G.add_nodes_from(range(4))
+    G.add_nodes_from(list(range(4)))
     assert_equal(bipartite.robins_alexander_clustering(G), 0)
     G.add_edges_from([(0,1),(2,3),(3,4)])
     assert_equal(bipartite.robins_alexander_clustering(G), 0)

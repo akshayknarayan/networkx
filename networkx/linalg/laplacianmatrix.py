@@ -74,7 +74,7 @@ def laplacian_matrix(G, nodelist=None, weight='weight'):
     L = np.zeros((n,n))
     for ui,u in enumerate(nodelist):
         totalwt=0.0
-        for v,d in G[u].items():
+        for v,d in list(G[u].items()):
             try:
                 vi=index[v]
             except KeyError:

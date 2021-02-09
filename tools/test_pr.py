@@ -11,7 +11,7 @@ http://github.com/ipython/ipython/tree/master/tools
 Usage:
     python test_pr.py 742
 """
-from __future__ import print_function
+
 
 import errno
 from glob import glob
@@ -290,8 +290,8 @@ def run_tests(venv):
 
     nx_file = nx_file.strip().decode('utf-8')
     if not nx_file.startswith(os.path.join(basedir, venv)):
-        msg = u"NetworkX does not appear to be in the venv: %s" % nx_file
-        msg += u"\nDo you use setupegg.py develop?"
+        msg = "NetworkX does not appear to be in the venv: %s" % nx_file
+        msg += "\nDo you use setupegg.py develop?"
         print(msg, file=sys.stderr)
         return False, msg
 
@@ -343,7 +343,7 @@ if __name__ == '__main__':
 
     # Test for requests version.
     import requests
-    major, minor, rev = map(int, requests.__version__.split('.'))
+    major, minor, rev = list(map(int, requests.__version__.split('.')))
     if minor < 10:
         print("test_pr.py:")
         print("The requests python library must be version 0.10.0",

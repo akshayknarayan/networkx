@@ -29,11 +29,11 @@ url="http://www-personal.umich.edu/~mejn/netdata/football.zip"
 try: # Python 3.x
     import urllib.request as urllib
 except ImportError: # Python 2.x
-    import urllib
+    import urllib.request, urllib.parse, urllib.error
 import io
 import zipfile
 
-sock = urllib.urlopen(url)  # open URL
+sock = urllib.request.urlopen(url)  # open URL
 s=io.BytesIO(sock.read()) # read into BytesIO "file"
 sock.close()
 
@@ -47,4 +47,4 @@ G=parse_gml(gml) # parse gml data
 print(txt)
 # print degree for each team - number of games
 for n,d in G.degree_iter():
-    print('%s %d' % (n, d))
+    print(('%s %d' % (n, d)))

@@ -105,7 +105,7 @@ def astar_path(G, source, target, heuristic=None, weight='weight'):
 
         explored[curnode] = parent
 
-        for neighbor, w in G[curnode].items():
+        for neighbor, w in list(G[curnode].items()):
             if neighbor in explored:
                 continue
             ncost = dist + w.get(weight, 1)

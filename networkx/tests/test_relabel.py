@@ -28,19 +28,19 @@ class TestRelabel():
         G.add_edges_from([('A','B'),('A','C'),('B','C'),('C','D')])
         G.name="paw"
         H=convert_node_labels_to_integers(G)
-        degH=H.degree().values()
-        degG=G.degree().values()
+        degH=list(H.degree().values())
+        degG=list(G.degree().values())
         assert_equal(sorted(degH), sorted(degG))
 
         H=convert_node_labels_to_integers(G,1000)
-        degH=H.degree().values()
-        degG=G.degree().values()
+        degH=list(H.degree().values())
+        degG=list(G.degree().values())
         assert_equal(sorted(degH), sorted(degG))
         assert_equal(H.nodes(), [1000, 1001, 1002, 1003])
 
         H=convert_node_labels_to_integers(G,ordering="increasing degree")
-        degH=H.degree().values()
-        degG=G.degree().values()
+        degH=list(H.degree().values())
+        degG=list(G.degree().values())
         assert_equal(sorted(degH), sorted(degG))
         assert_equal(degree(H,0), 1)
         assert_equal(degree(H,1), 2)
@@ -48,8 +48,8 @@ class TestRelabel():
         assert_equal(degree(H,3), 3)
 
         H=convert_node_labels_to_integers(G,ordering="decreasing degree")
-        degH=H.degree().values()
-        degG=G.degree().values()
+        degH=list(H.degree().values())
+        degG=list(G.degree().values())
         assert_equal(sorted(degH), sorted(degG))
         assert_equal(degree(H,0), 3)
         assert_equal(degree(H,1), 2)
@@ -58,8 +58,8 @@ class TestRelabel():
 
         H=convert_node_labels_to_integers(G,ordering="increasing degree",
                                           discard_old_labels=False)
-        degH=H.degree().values()
-        degG=G.degree().values()
+        degH=list(H.degree().values())
+        degG=list(G.degree().values())
         assert_equal(sorted(degH), sorted(degG))
         assert_equal(degree(H,0), 1)
         assert_equal(degree(H,1), 2)
@@ -75,8 +75,8 @@ class TestRelabel():
         G.add_edges_from([('C','D'),('A','B'),('A','C'),('B','C')])
         G.name="paw"
         H=convert_node_labels_to_integers(G,ordering="sorted")
-        degH=H.degree().values()
-        degG=G.degree().values()
+        degH=list(H.degree().values())
+        degG=list(G.degree().values())
         assert_equal(sorted(degH), sorted(degG))
 
         H=convert_node_labels_to_integers(G,ordering="sorted",

@@ -730,12 +730,12 @@ class DiGraph(Graph):
 
         """
         if nbunch is None:
-            nodes_nbrs=self.adj.items()
+            nodes_nbrs=list(self.adj.items())
         else:
             nodes_nbrs=((n,self.adj[n]) for n in self.nbunch_iter(nbunch))
         if data:
             for n,nbrs in nodes_nbrs:
-                for nbr,data in nbrs.items():
+                for nbr,data in list(nbrs.items()):
                     yield (n,nbr,data)
         else:
             for n,nbrs in nodes_nbrs:
@@ -767,12 +767,12 @@ class DiGraph(Graph):
         edges_iter : return an iterator of edges
         """
         if nbunch is None:
-            nodes_nbrs=self.pred.items()
+            nodes_nbrs=list(self.pred.items())
         else:
             nodes_nbrs=((n,self.pred[n]) for n in self.nbunch_iter(nbunch))
         if data:
             for n,nbrs in nodes_nbrs:
-                for nbr,data in nbrs.items():
+                for nbr,data in list(nbrs.items()):
                     yield (nbr,n,data)
         else:
             for n,nbrs in nodes_nbrs:
@@ -824,11 +824,11 @@ class DiGraph(Graph):
 
         """
         if nbunch is None:
-            nodes_nbrs=zip(iter(self.succ.items()),iter(self.pred.items()))
+            nodes_nbrs=list(zip(iter(list(self.succ.items())),iter(list(self.pred.items()))))
         else:
-            nodes_nbrs=zip(
+            nodes_nbrs=list(zip(
                 ((n,self.succ[n]) for n in self.nbunch_iter(nbunch)),
-                ((n,self.pred[n]) for n in self.nbunch_iter(nbunch)))
+                ((n,self.pred[n]) for n in self.nbunch_iter(nbunch))))
 
         if weight is None:
             for (n,succ),(n2,pred) in nodes_nbrs:
@@ -877,7 +877,7 @@ class DiGraph(Graph):
 
         """
         if nbunch is None:
-            nodes_nbrs=self.pred.items()
+            nodes_nbrs=list(self.pred.items())
         else:
             nodes_nbrs=((n,self.pred[n]) for n in self.nbunch_iter(nbunch))
 
@@ -887,7 +887,7 @@ class DiGraph(Graph):
         else:
         # edge weighted graph - degree is sum of edge weights
             for n,nbrs in nodes_nbrs:
-                yield (n, sum(data.get(weight,1) for data in nbrs.values()))
+                yield (n, sum(data.get(weight,1) for data in list(nbrs.values())))
 
 
     def out_degree_iter(self, nbunch=None, weight=None):
@@ -926,7 +926,7 @@ class DiGraph(Graph):
 
         """
         if nbunch is None:
-            nodes_nbrs=self.succ.items()
+            nodes_nbrs=list(self.succ.items())
         else:
             nodes_nbrs=((n,self.succ[n]) for n in self.nbunch_iter(nbunch))
 
@@ -936,7 +936,7 @@ class DiGraph(Graph):
         else:
         # edge weighted graph - degree is sum of edge weights
             for n,nbrs in nodes_nbrs:
-                yield (n, sum(data.get(weight,1) for data in nbrs.values()))
+                yield (n, sum(data.get(weight,1) for data in list(nbrs.values())))
 
 
     def in_degree(self, nbunch=None, weight=None):
@@ -1133,12 +1133,12 @@ class DiGraph(Graph):
         if reciprocal is True:
             H.add_edges_from( (u,v,deepcopy(d))
                               for u,nbrs in self.adjacency_iter()
-                              for v,d in nbrs.items() 
+                              for v,d in list(nbrs.items()) 
                               if v in self.pred[u])
         else:
             H.add_edges_from( (u,v,deepcopy(d))
                               for u,nbrs in self.adjacency_iter()
-                              for v,d in nbrs.items() )
+                              for v,d in list(nbrs.items()) )
         H.graph=deepcopy(self.graph)
         H.node=deepcopy(self.node)
         return H
@@ -1227,7 +1227,7 @@ class DiGraph(Graph):
         # add edges
         for u in H_succ:
             Hnbrs=H_succ[u]
-            for v,datadict in self_succ[u].items():
+            for v,datadict in list(self_succ[u].items()):
                 if v in H_succ:
                     # add both representations of edge: u-v and v-u
                     Hnbrs[v]=datadict

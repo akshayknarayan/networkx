@@ -21,9 +21,9 @@ class TestPageRank:
            (6,4)]
         G.add_edges_from(edges)
         self.G=G
-        self.G.pagerank=dict(zip(G,
+        self.G.pagerank=dict(list(zip(G,
                                  [0.03721197,0.05395735,0.04150565,
-                                  0.37508082,0.20599833, 0.28624589]))
+                                  0.37508082,0.20599833, 0.28624589])))
 
     def test_pagerank(self):
         G=self.G
@@ -65,7 +65,7 @@ class TestPageRank:
         M=networkx.google_matrix(G,alpha=0.9)
         e,ev=numpy.linalg.eig(M.T)
         p=numpy.array(ev[:,0]/ev[:,0].sum())[:,0]
-        for (a,b) in zip(p,self.G.pagerank.values()):
+        for (a,b) in zip(p,list(self.G.pagerank.values())):
             assert_almost_equal(a,b)
 
         personalize = dict((n,random.random()) for n in G)

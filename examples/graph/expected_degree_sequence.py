@@ -24,5 +24,5 @@ dh=degree_histogram(G)
 low=min(degree(G))
 for i in range(low,len(dh)):
     bar=''.join(dh[i]*['*'])
-    print("%2s (%2s) %s"%(i,dh[i],bar))
+    print(("%2s (%2s) %s"%(i,dh[i],bar)))
 

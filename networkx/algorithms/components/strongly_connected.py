@@ -322,7 +322,7 @@ def condensation(G, scc=None):
     for i,component in enumerate(scc):
         for n in component:
             mapping[n] = i
-    C.add_nodes_from(range(len(scc)))
+    C.add_nodes_from(list(range(len(scc))))
     for u,v in G.edges():
         if mapping[u] != mapping[v]:
             C.add_edge(mapping[u],mapping[v])

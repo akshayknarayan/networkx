@@ -122,7 +122,7 @@ def pagerank(G,alpha=0.85,personalization=None,
     i=0
     while True: # power iteration: make up to max_iter iterations
         xlast=x
-        x=dict.fromkeys(xlast.keys(),0)
+        x=dict.fromkeys(list(xlast.keys()),0)
         danglesum=alpha*scale*sum(xlast[n] for n in dangle)
         for n in x:
             # this matrix multiply looks odd because it is
@@ -186,7 +186,7 @@ def google_matrix(G, alpha=0.85, personalization=None,
     if personalization is None: # use G.nodes() ordering
         nodelist=G.nodes()
     else:  # use personalization "vector" ordering
-        nodelist=personalization.keys()
+        nodelist=list(personalization.keys())
         if set(nodelist)!=set(G):
             raise NetworkXError('Personalization vector dictionary'
                                 'must have a value for every node')
@@ -274,7 +274,7 @@ def pagerank_numpy(G, alpha=0.85, personalization=None, weight='weight'):
     if personalization is None: # use G.nodes() ordering
         nodelist=G.nodes()
     else:  # use personalization "vector" ordering
-        nodelist=personalization.keys()
+        nodelist=list(personalization.keys())
     M=google_matrix(G, alpha, personalization=personalization,
                     nodelist=nodelist, weight=weight)
     # use numpy LAPACK solver
@@ -283,7 +283,7 @@ def pagerank_numpy(G, alpha=0.85, personalization=None, weight='weight'):
     # eigenvector of largest eigenvalue at ind[-1], normalized
     largest=np.array(eigenvectors[:,ind[-1]]).flatten().real
     norm=float(largest.sum())
-    centrality=dict(zip(nodelist,map(float,largest/norm)))
+    centrality=dict(list(zip(nodelist,list(map(float,largest/norm)))))
     return centrality
 
 
@@ -354,7 +354,7 @@ def pagerank_scipy(G, alpha=0.85, personalization=None,
     if personalization is None: # use G.nodes() ordering
         nodelist=G.nodes()
     else:  # use personalization "vector" ordering
-        nodelist=personalization.keys()
+        nodelist=list(personalization.keys())
     M=nx.to_scipy_sparse_matrix(G,nodelist=nodelist,weight=weight,dtype='f')
     (n,m)=M.shape # should be square
     S=scipy.array(M.sum(axis=1)).flatten()
@@ -380,7 +380,7 @@ def pagerank_scipy(G, alpha=0.85, personalization=None,
         # check convergence, l1 norm
         err=scipy.absolute(x-xlast).sum()
         if err < n*tol:
-            return dict(zip(nodelist,map(float,x)))
+            return dict(list(zip(nodelist,list(map(float,x)))))
         i+=1
     raise NetworkXError('pagerank_scipy: power iteration failed to converge'
                         'in %d iterations.'%(i+1))

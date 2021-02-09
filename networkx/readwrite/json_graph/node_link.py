@@ -43,7 +43,7 @@ def node_link_data(G):
     --------
     node_link_graph, adjacency_data, tree_data
     """
-    mapping = dict(zip(G,count()))
+    mapping = dict(list(zip(G,count())))
     data = {}
     data['directed'] = G.is_directed()
     data['multigraph'] = G.is_multigraph()
@@ -97,12 +97,12 @@ def node_link_graph(data, directed=False, multigraph=True):
     for d in data['nodes']:
         node = d.get('id',next(c))
         mapping.append(node)
-        nodedata = dict((str(k),v) for k,v in d.items() if k!='id')
+        nodedata = dict((str(k),v) for k,v in list(d.items()) if k!='id')
         graph.add_node(node, **nodedata)
     for d in data['links']:
         source = d.pop('source')
         target = d.pop('target')
-        edgedata = dict((str(k),v) for k,v in d.items() 
+        edgedata = dict((str(k),v) for k,v in list(d.items()) 
                         if k!='source' and k!='target')
         graph.add_edge(mapping[source],mapping[target],**edgedata)
     return graph

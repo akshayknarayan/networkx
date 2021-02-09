@@ -20,8 +20,8 @@ __all__ = ['categorical_node_match',
 def copyfunc(f, name=None):
     """Returns a deepcopy of a function."""
     try:
-        return types.FunctionType(f.func_code, f.func_globals, name or f.name,
-                                  f.func_defaults, f.func_closure)
+        return types.FunctionType(f.__code__, f.__globals__, name or f.name,
+                                  f.__defaults__, f.__closure__)
     except AttributeError:
         return types.FunctionType(f.__code__, f.__globals__, name or f.name,
                                   f.__defaults__, f.__closure__)
@@ -105,18 +105,18 @@ categorical_edge_match = copyfunc(categorical_node_match, 'categorical_edge_matc
 def categorical_multiedge_match(attr, default):
     if nx.utils.is_string_like(attr):
         def match(datasets1, datasets2):
-            values1 = set([data.get(attr, default) for data in datasets1.values()])
-            values2 = set([data.get(attr, default) for data in datasets2.values()])
+            values1 = set([data.get(attr, default) for data in list(datasets1.values())])
+            values2 = set([data.get(attr, default) for data in list(datasets2.values())])
             return values1 == values2
     else:
         attrs = list(zip(attr, default)) # Python 3
         def match(datasets1, datasets2):
             values1 = set([])
-            for data1 in datasets1.values():
+            for data1 in list(datasets1.values()):
                 x = tuple( data1.get(attr, d) for attr, d in attrs )
                 values1.add(x)
             values2 = set([])
-            for data2 in datasets2.values():
+            for data2 in list(datasets2.values()):
                 x = tuple( data2.get(attr, d) for attr, d in attrs )
                 values2.add(x)
             return values1 == values2
@@ -182,18 +182,18 @@ numerical_edge_match = copyfunc(numerical_node_match, 'numerical_edge_match')
 def numerical_multiedge_match(attr, default, rtol=1.0000000000000001e-05, atol=1e-08):
     if nx.utils.is_string_like(attr):
         def match(datasets1, datasets2):
-            values1 = sorted([data.get(attr, default) for data in datasets1.values()])
-            values2 = sorted([data.get(attr, default) for data in datasets2.values()])
+            values1 = sorted([data.get(attr, default) for data in list(datasets1.values())])
+            values2 = sorted([data.get(attr, default) for data in list(datasets2.values())])
             return allclose(values1, values2, rtol=rtol, atol=atol)
     else:
         attrs = list(zip(attr, default))  # Python 3
         def match(datasets1, datasets2):
             values1 = []
-            for data1 in datasets1.values():
+            for data1 in list(datasets1.values()):
                 x = tuple( data1.get(attr, d) for attr, d in attrs )
                 values1.append(x)
             values2 = []
-            for data2 in datasets2.values():
+            for data2 in list(datasets2.values()):
                 x = tuple( data2.get(attr, d) for attr, d in attrs )
                 values2.append(x)
             values1.sort()
@@ -308,8 +308,8 @@ def generic_multiedge_match(attr, default, op):
     # We must test every possible isomorphism between the edges.
     if nx.utils.is_string_like(attr):
         def match(datasets1, datasets2):
-            values1 = [data.get(attr, default) for data in datasets1.values()]
-            values2 = [data.get(attr, default) for data in datasets2.values()]
+            values1 = [data.get(attr, default) for data in list(datasets1.values())]
+            values2 = [data.get(attr, default) for data in list(datasets2.values())]
             for vals2 in permutations(values2):
                 for xi, yi in zip(values1, vals2):
                     if not op(xi, yi):
@@ -325,11 +325,11 @@ def generic_multiedge_match(attr, default, op):
         attrs = list(zip(attr, default)) # Python 3
         def match(datasets1, datasets2):
             values1 = []
-            for data1 in datasets1.values():
+            for data1 in list(datasets1.values()):
                 x = tuple( data1.get(attr, d) for attr, d in attrs )
                 values1.append(x)
             values2 = []
-            for data2 in datasets2.values():
+            for data2 in list(datasets2.values()):
                 x = tuple( data2.get(attr, d) for attr, d in attrs )
                 values2.append(x)
             for vals2 in permutations(values2):

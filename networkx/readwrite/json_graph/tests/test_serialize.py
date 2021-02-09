@@ -24,7 +24,7 @@ class TestAdjacency:
         assert_equal(H[1][2]['width'],7)
 
         try: 
-            from StringIO import StringIO
+            from io import StringIO
         except:
             from io import StringIO
         io = StringIO()

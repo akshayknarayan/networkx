@@ -75,8 +75,8 @@ if __name__ == '__main__':
     G=miles_graph()
 
     print("Loaded miles_dat.txt containing 128 cities.")
-    print("digraph has %d nodes with %d edges"\
-          %(nx.number_of_nodes(G),nx.number_of_edges(G)))
+    print(("digraph has %d nodes with %d edges"\
+          %(nx.number_of_nodes(G),nx.number_of_edges(G))))
 
 
     # make new graph of cites, edge if less then 300 miles between them

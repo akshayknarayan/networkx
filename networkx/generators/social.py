@@ -22,7 +22,7 @@ def karate_club_graph():
        http://vlado.fmf.uni-lj.si/pub/networks/data/Ucinet/UciData.htm
     """
     G=nx.Graph()
-    G.add_nodes_from(range(34))
+    G.add_nodes_from(list(range(34)))
     G.name="Zachary's Karate Club"
 
     zacharydat="""\

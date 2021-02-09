@@ -223,12 +223,12 @@ def single_source_dijkstra_path_length(G, source, cutoff= None,
         #is about 30% slower than the following
         if G.is_multigraph():
             edata=[]
-            for w,keydata in G[v].items():
+            for w,keydata in list(G[v].items()):
                 minweight=min((dd.get(weight,1)
-                               for k,dd in keydata.items()))
+                               for k,dd in list(keydata.items())))
                 edata.append((w,{weight:minweight}))
         else:
-            edata=iter(G[v].items())
+            edata=iter(list(G[v].items()))
 
         for w,edgedata in edata:
             vw_dist = dist[v] + edgedata.get(weight,1)
@@ -317,12 +317,12 @@ def single_source_dijkstra(G,source,target=None,cutoff=None,weight='weight'):
         #is about 30% slower than the following
         if G.is_multigraph():
             edata=[]
-            for w,keydata in G[v].items():
+            for w,keydata in list(G[v].items()):
                 minweight=min((dd.get(weight,1)
-                               for k,dd in keydata.items()))
+                               for k,dd in list(keydata.items())))
                 edata.append((w,{weight:minweight}))
         else:
-            edata=iter(G[v].items())
+            edata=iter(list(G[v].items()))
 
         for w,edgedata in edata:
             vw_dist = dist[v] + edgedata.get(weight,1)
@@ -384,12 +384,12 @@ def dijkstra_predecessor_and_distance(G,source, cutoff=None, weight='weight'):
         dist[v] = d
         if G.is_multigraph():
             edata=[]
-            for w,keydata in G[v].items():
+            for w,keydata in list(G[v].items()):
                 minweight=min((dd.get(weight,1)
-                               for k,dd in keydata.items()))
+                               for k,dd in list(keydata.items())))
                 edata.append((w,{weight:minweight}))
         else:
-            edata=iter(G[v].items())
+            edata=iter(list(G[v].items()))
         for w,edgedata in edata:
             vw_dist = dist[v] + edgedata.get(weight,1)
             if cutoff is not None:
@@ -563,7 +563,7 @@ def bellman_ford(G, source, weight = 'weight'):
 
     if G.is_multigraph():
         def get_weight(edge_dict):
-            return min([eattr.get(weight,1) for eattr in edge_dict.values()])
+            return min([eattr.get(weight,1) for eattr in list(edge_dict.values())])
     else:
         def get_weight(edge_dict):
             return edge_dict.get(weight,1)
@@ -572,7 +572,7 @@ def bellman_ford(G, source, weight = 'weight'):
         no_changes=True
         # Only need edges from nodes in dist b/c all others have dist==inf
         for u, dist_u in list(dist.items()): # get all edges from nodes in dist
-            for v, edict in G[u].items():  # double loop handles undirected too
+            for v, edict in list(G[u].items()):  # double loop handles undirected too
                 dist_v = dist_u + get_weight(edict)
                 if v not in dist or dist[v] > dist_v:
                     dist[v] = dist_v
@@ -732,14 +732,14 @@ def bidirectional_dijkstra(G, source, target, weight = 'weight'):
             if(dir==0): #forward
                 if G.is_multigraph():
                     minweight=min((dd.get(weight,1)
-                               for k,dd in G[v][w].items()))
+                               for k,dd in list(G[v][w].items())))
                 else:
                     minweight=G[v][w].get(weight,1)
                 vwLength = dists[dir][v] + minweight #G[v][w].get(weight,1)
             else: #back, must remember to change v,w->w,v
                 if G.is_multigraph():
                     minweight=min((dd.get(weight,1)
-                               for k,dd in G[w][v].items()))
+                               for k,dd in list(G[w][v].items())))
                 else:
                     minweight=G[w][v].get(weight,1)
                 vwLength = dists[dir][v] + minweight #G[w][v].get(weight,1)

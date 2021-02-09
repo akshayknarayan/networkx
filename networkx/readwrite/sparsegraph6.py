@@ -62,7 +62,7 @@ def parse_graph6(str):
             'Expected %d bits but got %d in graph6' % (n*(n-1)//2, len(data)*6))
 
     G=nx.Graph()
-    G.add_nodes_from(range(n))
+    G.add_nodes_from(list(range(n)))
     for (i,j),b in zip([(i,j) for j in range(1,n) for i in range(j)], bits()):
         if b: G.add_edge(i,j)
     return G
@@ -141,7 +141,7 @@ def parse_sparse6(string):
     v = 0
 
     G=nx.MultiGraph()
-    G.add_nodes_from(range(n))
+    G.add_nodes_from(list(range(n)))
 
     for b,x in parseData():
         if b: v += 1

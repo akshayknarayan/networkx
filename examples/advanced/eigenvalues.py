@@ -35,8 +35,8 @@ G=gnm_random_graph(n,m)
 
 L=generalized_laplacian(G)
 e=eigenvalues(L)
-print("Largest eigenvalue:", max(e))
-print("Smallest eigenvalue:", min(e))
+print(("Largest eigenvalue:", max(e)))
+print(("Smallest eigenvalue:", min(e)))
 # plot with matplotlib if we have it
 # shows "semicircle" distribution of eigenvalues 
 try:

@@ -96,14 +96,14 @@ class PrintGraph(Graph):
             seen=set()
             for u,nbrs in self.adjacency_iter():
                 if u in bunch:
-                    for v,datadict in nbrs.items():
+                    for v,datadict in list(nbrs.items()):
                         if v in bunch and v not in seen:
                             dd=deepcopy(datadict)
                             H.add_edge(u,v,dd)
                     seen.add(u)
             # copy node and graph attr dicts
             H.node=dict( (n,deepcopy(d)) 
-                         for (n,d) in self.node.items() if n in H)
+                         for (n,d) in list(self.node.items()) if n in H)
             H.graph=deepcopy(self.graph)
             return H
 
@@ -115,14 +115,14 @@ if __name__=='__main__':
     G.add_nodes_from('bar',weight=8)
     G.remove_node('b')
     G.remove_nodes_from('ar')
-    print(G.nodes(data=True))
+    print((G.nodes(data=True)))
     G.add_edge(0,1,weight=10)
-    print(G.edges(data=True))
+    print((G.edges(data=True)))
     G.remove_edge(0,1)
     G.add_edges_from(list(zip(list(range(0o3)),list(range(1,4)))),weight=10)
-    print(G.edges(data=True))
+    print((G.edges(data=True)))
     G.remove_edges_from(list(zip(list(range(0o3)),list(range(1,4)))))
-    print(G.edges(data=True))
+    print((G.edges(data=True)))
 
     
     G=PrintGraph()
@@ -130,6 +130,6 @@ if __name__=='__main__':
     print("subgraph")
     H1=G.subgraph(list(range(4)),copy=False)
     H2=G.subgraph(list(range(4)),copy=False)
-    print(H1.edges())
-    print(H2.edges())
+    print((H1.edges()))
+    print((H2.edges()))
                  

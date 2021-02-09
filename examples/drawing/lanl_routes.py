@@ -21,7 +21,7 @@ def lanl_graph():
     try:
         fh=open('lanl_routes.edgelist','r')
     except IOError:
-        print "lanl.edges not found"
+        print("lanl.edges not found")
         raise
 
     G=nx.Graph()
@@ -52,9 +52,9 @@ if __name__ == '__main__':
 
     G=lanl_graph()
 
-    print "graph has %d nodes with %d edges"\
-          %(nx.number_of_nodes(G),nx.number_of_edges(G))
-    print nx.number_connected_components(G),"connected components"
+    print("graph has %d nodes with %d edges"\
+          %(nx.number_of_nodes(G),nx.number_of_edges(G)))
+    print(nx.number_connected_components(G),"connected components")
 
     import matplotlib.pyplot as plt
     plt.figure(figsize=(8,8))
@@ -67,8 +67,8 @@ if __name__ == '__main__':
             alpha=0.5,
             node_size=15)
     # adjust the plot limits
-    xmax=1.02*max(xx for xx,yy in pos.values())
-    ymax=1.02*max(yy for xx,yy in pos.values())
+    xmax=1.02*max(xx for xx,yy in list(pos.values()))
+    ymax=1.02*max(yy for xx,yy in list(pos.values()))
     plt.xlim(0,xmax)
     plt.ylim(0,ymax)
     plt.savefig("lanl_routes.png")

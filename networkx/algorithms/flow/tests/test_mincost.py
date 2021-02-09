@@ -193,7 +193,7 @@ class TestNetworkSimplex:
 
         "PS.ex.7.1: testing main function"
         sol = nx.max_flow_min_cost(G, 's', 't', capacity=0, weight=1)
-        flow = sum(v for v in sol['s'].values())
+        flow = sum(v for v in list(sol['s'].values()))
         assert_equal(4, flow)
         assert_equal(23, nx.cost_of_flow(G, sol, weight=1))
         assert_equal(sol['s'], {'a': 2, 'b': 2})

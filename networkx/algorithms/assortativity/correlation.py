@@ -135,7 +135,7 @@ def degree_pearson_correlation_coefficient(G, x='out', y='in',
         raise ImportError(
           "Assortativity requires SciPy: http://scipy.org/ ")
     xy=node_degree_xy(G, x=x, y=y, nodes=nodes, weight=weight)
-    x,y=zip(*xy)
+    x,y=list(zip(*xy))
     return stats.pearsonr(x,y)[0]
 
 

@@ -53,7 +53,7 @@ def random_layout(G,dim=2):
         raise ImportError("random_layout() requires numpy: http://scipy.org/ ")
     n=len(G)
     pos=np.asarray(np.random.random((n,dim)),dtype=np.float32)
-    return dict(zip(G,pos))
+    return dict(list(zip(G,pos)))
 
 
 def circular_layout(G, dim=2, scale=1):
@@ -97,7 +97,7 @@ def circular_layout(G, dim=2, scale=1):
     t=np.arange(0,2.0*np.pi,2.0*np.pi/len(G),dtype=np.float32)
     pos=np.transpose(np.array([np.cos(t),np.sin(t)]))
     pos=_rescale_layout(pos,scale=scale)
-    return dict(zip(G,pos))
+    return dict(list(zip(G,pos)))
 
 def shell_layout(G,nlist=None,dim=2,scale=1):
     """Position nodes in concentric circles.
@@ -152,7 +152,7 @@ def shell_layout(G,nlist=None,dim=2,scale=1):
     for nodes in nlist:
         t=np.arange(0,2.0*np.pi,2.0*np.pi/len(nodes),dtype=np.float32)
         pos=np.transpose(np.array([radius*np.cos(t),radius*np.sin(t)]))
-        npos.update(zip(nodes,pos))
+        npos.update(list(zip(nodes,pos)))
         radius+=1.0
 
     # FIXME: rescale
@@ -218,7 +218,7 @@ def fruchterman_reingold_layout(G,dim=2,k=None,
     except ImportError:
         raise ImportError("fruchterman_reingold_layout() requires numpy: http://scipy.org/ ")
     if fixed is not None:
-        nfixed=dict(zip(G,range(len(G))))
+        nfixed=dict(list(zip(G,list(range(len(G))))))
         fixed=np.asarray([nfixed[v] for v in fixed])
 
     if pos is not None:
@@ -245,7 +245,7 @@ def fruchterman_reingold_layout(G,dim=2,k=None,
         pos=_fruchterman_reingold(A,dim,k,pos_arr,fixed,iterations)
     if fixed is None:
         pos=_rescale_layout(pos,scale=scale)
-    return dict(zip(G,pos))
+    return dict(list(zip(G,pos)))
 
 spring_layout=fruchterman_reingold_layout
 
@@ -432,7 +432,7 @@ def spectral_layout(G, dim=2, weight='weight', scale=1):
             pos=np.array([[1,1]])
         else:
             pos=np.array([[0,0.5],[1,0.5]])
-        return dict(zip(G,pos))
+        return dict(list(zip(G,pos)))
     try:
         # Sparse matrix
         if len(G)< 500:  # dense solver is faster for small graphs
@@ -451,7 +451,7 @@ def spectral_layout(G, dim=2, weight='weight', scale=1):
         pos=_spectral(A,dim)
 
     pos=_rescale_layout(pos,scale)
-    return dict(zip(G,pos))
+    return dict(list(zip(G,pos)))
 
 
 def _spectral(A, dim=2):

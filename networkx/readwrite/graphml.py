@@ -165,15 +165,15 @@ class GraphML(object):
     
     try:
         chr(12345)     # Fails on Py!=3.
-        unicode = str  # Py3k's str is our unicode type
+        str = str  # Py3k's str is our unicode type
         long = int     # Py3K's int is our long type
     except ValueError:
         # Python 2.x
         pass
 
     types=[(int,"integer"), # for Gephi GraphML bug
-           (str,"yfiles"),(str,"string"), (unicode,"string"),
-           (int,"int"), (long,"long"),
+           (str,"yfiles"),(str,"string"), (str,"string"),
+           (int,"int"), (int,"long"),
            (float,"float"), (float,"double"),
            (bool, "boolean")]
     
@@ -249,7 +249,7 @@ class GraphMLWriter(GraphML):
     def add_attributes(self, scope, xml_obj, data, default):
         """Appends attributes to edges or nodes.
         """
-        for k,v in data.items():
+        for k,v in list(data.items()):
             default_value=default.get(k)
             obj=self.add_data(make_str(k), type(v), make_str(v), 
                               scope=scope, default=default_value)
@@ -299,7 +299,7 @@ class GraphMLWriter(GraphML):
                                 id=graphid)
 
         default={}
-        data=dict((k,v) for (k,v) in  G.graph.items() 
+        data=dict((k,v) for (k,v) in  list(G.graph.items()) 
                   if k not in ['node_default','edge_default'])
         self.add_attributes("graph", graph_element, data, default)
         self.add_nodes(G,graph_element)
@@ -366,7 +366,7 @@ class GraphMLReader(GraphML):
         # set defaults for graph attributes
         G.graph['node_default']={}
         G.graph['edge_default']={}
-        for key_id,value in defaults.items():
+        for key_id,value in list(defaults.items()):
             key_for=graphml_keys[key_id]['for']
             name=graphml_keys[key_id]['name']
             python_type=graphml_keys[key_id]['type']

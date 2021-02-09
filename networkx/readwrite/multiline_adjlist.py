@@ -88,8 +88,8 @@ def generate_multiline_adjlist(G, delimiter = ' '):
         if G.is_multigraph():
             for s,nbrs in G.adjacency_iter():
                 nbr_edges=[ (u,data) 
-                            for u,datadict in nbrs.items() 
-                            for key,data in datadict.items()]
+                            for u,datadict in list(nbrs.items()) 
+                            for key,data in list(datadict.items())]
                 deg=len(nbr_edges)
                 yield make_str(s)+delimiter+"%i"%(deg)
                 for u,d in nbr_edges:
@@ -101,7 +101,7 @@ def generate_multiline_adjlist(G, delimiter = ' '):
             for s,nbrs in G.adjacency_iter():
                 deg=len(nbrs)
                 yield make_str(s)+delimiter+"%i"%(deg)
-                for u,d in nbrs.items():
+                for u,d in list(nbrs.items()):
                    if d is None:    
                        yield make_str(u)
                    else:   
@@ -111,9 +111,9 @@ def generate_multiline_adjlist(G, delimiter = ' '):
             seen=set()  # helper dict used to avoid duplicate edges
             for s,nbrs in G.adjacency_iter():
                 nbr_edges=[ (u,data) 
-                            for u,datadict in nbrs.items() 
+                            for u,datadict in list(nbrs.items()) 
                             if u not in seen
-                            for key,data in datadict.items()]
+                            for key,data in list(datadict.items())]
                 deg=len(nbr_edges)
                 yield make_str(s)+delimiter+"%i"%(deg)
                 for u,d in nbr_edges:
@@ -125,7 +125,7 @@ def generate_multiline_adjlist(G, delimiter = ' '):
         else: # undirected single edges
             seen=set()  # helper dict used to avoid duplicate edges
             for s,nbrs in G.adjacency_iter():
-                nbr_edges=[ (u,d) for u,d in nbrs.items() if u not in seen]
+                nbr_edges=[ (u,d) for u,d in list(nbrs.items()) if u not in seen]
                 deg=len(nbr_edges)
                 yield  make_str(s)+delimiter+"%i"%(deg)
                 for u,d in nbr_edges:

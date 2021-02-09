@@ -83,26 +83,26 @@ class TestGraphsEqual(_GenericTest):
     def test_graphs_equal(self):
         G = nx.path_graph(4)
         H = nx.Graph()
-        H.add_path(range(4))
+        H.add_path(list(range(4)))
         H.name='path_graph(4)'
         self._test_equal(G,H)
 
     def test_graphs_not_equal(self):
         G = nx.path_graph(4)
         H = nx.Graph()
-        H.add_cycle(range(4))
+        H.add_cycle(list(range(4)))
         self._test_not_equal(G,H)
 
     def test_graphs_not_equal2(self):
         G = nx.path_graph(4)
         H = nx.Graph()
-        H.add_path(range(3))
+        H.add_path(list(range(3)))
         H.name='path_graph(4)'
         self._test_not_equal(G,H)
 
     def test_graphs_not_equal3(self):
         G = nx.path_graph(4)
         H = nx.Graph()
-        H.add_path(range(4))
+        H.add_path(list(range(4)))
         H.name='path_graph(foo)'
         self._test_not_equal(G,H)

@@ -115,7 +115,7 @@ def to_networkx_graph(data,create_using=None,multigraph_input=False):
             if hasattr(data,'graph') and isinstance(data.graph,dict):
                 result.graph=data.graph.copy()
             if hasattr(data,'node') and isinstance(data.node,dict):
-                result.node=dict( (n,dd.copy()) for n,dd in data.node.items() )
+                result.node=dict( (n,dd.copy()) for n,dd in list(data.node.items()) )
             return result
         except:
             raise nx.NetworkXError("Input is not a correct NetworkX graph.")
@@ -242,13 +242,13 @@ def from_dict_of_lists(d,create_using=None):
         # each edge shows up twice in the dict_of_lists.
         # So we need to treat this case separately.
         seen={}
-        for node,nbrlist in d.items():
+        for node,nbrlist in list(d.items()):
             for nbr in nbrlist:
                 if nbr not in seen:
                     G.add_edge(node,nbr)
             seen[node]=1  # don't allow reverse edge to show up
     else:
-        G.add_edges_from( ((node,nbr) for node,nbrlist in d.items()
+        G.add_edges_from( ((node,nbr) for node,nbrlist in list(d.items())
                            for nbr in nbrlist) )
     return G
 
@@ -283,7 +283,7 @@ def to_dict_of_dicts(G,nodelist=None,edge_data=None):
         if edge_data is None:
             for u in nodelist:
                 dod[u]={}
-                for v,data in ((v,data) for v,data in G[u].items() if v in nodelist):
+                for v,data in ((v,data) for v,data in list(G[u].items()) if v in nodelist):
                     dod[u][v]=data
         else: # nodelist and edge_data are not None
             for u in nodelist:
@@ -325,33 +325,33 @@ def from_dict_of_dicts(d,create_using=None,multigraph_input=False):
         if G.is_directed():
             if G.is_multigraph():
                 G.add_edges_from( (u,v,key,data)
-                                  for u,nbrs in d.items()
-                                  for v,datadict in nbrs.items()
-                                  for key,data in datadict.items()
+                                  for u,nbrs in list(d.items())
+                                  for v,datadict in list(nbrs.items())
+                                  for key,data in list(datadict.items())
                                 )
             else:
                 G.add_edges_from( (u,v,data)
-                                  for u,nbrs in d.items()
-                                  for v,datadict in nbrs.items()
-                                  for key,data in datadict.items()
+                                  for u,nbrs in list(d.items())
+                                  for v,datadict in list(nbrs.items())
+                                  for key,data in list(datadict.items())
                                 )
         else: # Undirected
             if G.is_multigraph():
                 seen=set()   # don't add both directions of undirected graph
-                for u,nbrs in d.items():
-                    for v,datadict in nbrs.items():
+                for u,nbrs in list(d.items()):
+                    for v,datadict in list(nbrs.items()):
                         if (u,v) not in seen:
                             G.add_edges_from( (u,v,key,data)
-                                               for key,data in datadict.items()
+                                               for key,data in list(datadict.items())
                                               )
                             seen.add((v,u))
             else:
                 seen=set()   # don't add both directions of undirected graph
-                for u,nbrs in d.items():
-                    for v,datadict in nbrs.items():
+                for u,nbrs in list(d.items()):
+                    for v,datadict in list(nbrs.items()):
                         if (u,v) not in seen:
                             G.add_edges_from( (u,v,data)
-                                        for key,data in datadict.items() )
+                                        for key,data in list(datadict.items()) )
                             seen.add((v,u))
 
     else: # not a multigraph to multigraph transfer
@@ -360,15 +360,15 @@ def from_dict_of_dicts(d,create_using=None,multigraph_input=False):
             # We don't need this check for digraphs since we add both directions,
             # or for Graph() since it is done implicitly (parallel edges not allowed)
             seen=set()
-            for u,nbrs in d.items():
-                for v,data in nbrs.items():
+            for u,nbrs in list(d.items()):
+                for v,data in list(nbrs.items()):
                     if (u,v) not in seen:
                         G.add_edge(u,v,attr_dict=data)
                     seen.add((v,u))
         else:
             G.add_edges_from( ( (u,v,data)
-                                for u,nbrs in d.items()
-                                for v,data in nbrs.items()) )
+                                for u,nbrs in list(d.items())
+                                for v,data in list(nbrs.items())) )
     return G
 
 def to_edgelist(G,nodelist=None):
@@ -492,7 +492,7 @@ def to_numpy_matrix(G, nodelist=None, dtype=None, order=None,
 
     nlen=len(nodelist)
     undirected = not G.is_directed()
-    index=dict(zip(nodelist,range(nlen)))
+    index=dict(list(zip(nodelist,list(range(nlen)))))
 
     if G.is_multigraph():
         # Handle MultiGraphs and MultiDiGraphs
@@ -519,7 +519,7 @@ def to_numpy_matrix(G, nodelist=None, dtype=None, order=None,
         # Graph or DiGraph, this is much faster than above 
         M = np.zeros((nlen,nlen), dtype=dtype, order=order)
         for u,nbrdict in G.adjacency_iter():
-            for v,d in nbrdict.items():
+            for v,d in list(nbrdict.items()):
                 try:
                     M[index[u],index[v]]=d.get(weight,1)
                 except KeyError:
@@ -583,7 +583,7 @@ def from_numpy_matrix(A,create_using=None):
         blurb = chr(1245) # just to trigger the exception
         kind_to_python_type['U']=str
     except ValueError: # Python 2.6+
-        kind_to_python_type['U']=unicode
+        kind_to_python_type['U']=str
 
     # This should never fail if you have created a numpy matrix with numpy...  
     try:
@@ -604,14 +604,14 @@ def from_numpy_matrix(A,create_using=None):
         raise TypeError("Unknown numpy data type: %s"%dt)
 
     # make sure we get isolated nodes
-    G.add_nodes_from(range(n))
+    G.add_nodes_from(list(range(n)))
     # get a list of edges
     x,y=np.asarray(A).nonzero()
 
     # handle numpy constructed data type
     if python_type is 'void':
         fields=sorted([(offset,dtype,name) for name,(dtype,offset) in
-                       A.dtype.fields.items()])
+                       list(A.dtype.fields.items())])
         for (u,v) in zip(x,y):
             attr={}
             for (offset,dtype,name),val in zip(fields,A[u,v]):
@@ -688,7 +688,7 @@ def to_numpy_recarray(G,nodelist=None,
 
     nlen=len(nodelist)
     undirected = not G.is_directed()
-    index=dict(zip(nodelist,range(nlen)))
+    index=dict(list(zip(nodelist,list(range(nlen)))))
     M = np.zeros((nlen,nlen), dtype=dtype, order=order)
 
     names=M.dtype.names
@@ -782,13 +782,13 @@ def to_scipy_sparse_matrix(G, nodelist=None, dtype=None,
         msg = "Ambiguous ordering: `nodelist` contained duplicates."
         raise nx.NetworkXError(msg)
 
-    index = dict(zip(nodelist,range(nlen)))
+    index = dict(list(zip(nodelist,list(range(nlen)))))
     if G.number_of_edges() == 0:
         row,col,data=[],[],[]
     else:
-        row,col,data=zip(*((index[u],index[v],d.get(weight,1))
+        row,col,data=list(zip(*((index[u],index[v],d.get(weight,1))
                            for u,v,d in G.edges_iter(nodelist, data=True)
-                           if u in index and v in index))
+                           if u in index and v in index)))
     if G.is_directed():
         M = sparse.coo_matrix((data,(row,col)),shape=(nlen,nlen), dtype=dtype)
     else:
@@ -827,7 +827,7 @@ def from_scipy_sparse_matrix(A,create_using=None):
     if n!=m:
         raise nx.NetworkXError(\
               "Adjacency matrix is not square. nx,ny=%s"%(A.shape,))
-    G.add_nodes_from(range(n)) # make sure we get isolated nodes
+    G.add_nodes_from(list(range(n))) # make sure we get isolated nodes
 
     for i,row in enumerate(AA.rows):
         for pos,j in enumerate(row):

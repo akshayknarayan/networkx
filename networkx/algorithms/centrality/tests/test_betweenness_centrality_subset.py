@@ -140,7 +140,7 @@ class TestEdgeSubsetBetweennessCentrality:
         b_answer[(0,3)]=0.5
         b_answer[(0,1)]=0.5
         for n in sorted(G.edges()):
-            print(n,b[n])
+            print((n,b[n]))
             assert_almost_equal(b[n],b_answer[n])
 
     def test_P5_directed(self):

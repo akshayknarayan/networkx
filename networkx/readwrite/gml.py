@@ -183,8 +183,8 @@ def parse_gml(lines, relabel=True):
 
     if relabel:
         # relabel, but check for duplicate labels first
-        mapping=[(n,d['label']) for n,d in G.node.items()]
-        x,y=zip(*mapping)
+        mapping=[(n,d['label']) for n,d in list(G.node.items())]
+        x,y=list(zip(*mapping))
         if len(set(y))!=len(G):
             raise NetworkXError('Failed to relabel nodes: '
                                 'duplicate node labels found. '
@@ -276,7 +276,7 @@ def generate_gml(G):
     # recursively make dicts into gml brackets
     def listify(d,indent,indentlevel):
         result='[ \n'
-        for k,v in d.items():
+        for k,v in list(d.items()):
             if type(v)==dict:
                 v=listify(v,indent,indentlevel+1)
             result += (indentlevel+1)*indent + \
@@ -304,14 +304,14 @@ def generate_gml(G):
         node_attr={}
 
     indent=2*' '
-    count=iter(range(len(G)))
+    count=iter(list(range(len(G))))
     node_id={}
 
     yield "graph ["
     if G.is_directed():
         yield indent+"directed 1"
     # write graph attributes 
-    for k,v in G.graph.items():
+    for k,v in list(G.graph.items()):
         if k == 'directed':
             continue
         yield indent+string_item(k,v,indent)
@@ -327,7 +327,7 @@ def generate_gml(G):
             label='"%s"'%label
         yield 2*indent+'label %s'%label
         if n in G:
-          for k,v in G.node[n].items():
+          for k,v in list(G.node[n].items()):
               if k=='id' or k == 'label': continue
               yield 2*indent+string_item(k,v,indent)
         yield indent+"]"
@@ -336,7 +336,7 @@ def generate_gml(G):
         yield indent+"edge ["
         yield 2*indent+"source %s"%node_id[u]
         yield 2*indent+"target %s"%node_id[v]
-        for k,v in edgedata.items():
+        for k,v in list(edgedata.items()):
             if k=='source': continue
             if k=='target': continue
             yield 2*indent+string_item(k,v,indent)

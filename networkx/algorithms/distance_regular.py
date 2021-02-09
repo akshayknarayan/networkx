@@ -105,7 +105,7 @@ def global_parameters(b,c):
     ca.insert(0,0)
     k = ba[0]
     aa = [k-x-y for x,y in zip(ba,ca)]
-    return zip(*[ca,aa,ba])
+    return list(zip(*[ca,aa,ba]))
 
 
 def intersection_array(G):

@@ -72,7 +72,7 @@ if __name__ == '__main__':
 
     # print edges with message subject
     for (u,v,d) in G.edges_iter(data=True):
-        print("From: %s To: %s Subject: %s"%(u,v,d['message']["Subject"]))
+        print(("From: %s To: %s Subject: %s"%(u,v,d['message']["Subject"])))
     
 
     try: # draw

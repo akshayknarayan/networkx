@@ -81,7 +81,7 @@ class TestCycles:
     def test_complete_directed_graph(self):
         # see table 2 in Johnson's paper
         ncircuits=[1,5,20,84,409,2365,16064]
-        for n,c in zip(range(2,9),ncircuits):
+        for n,c in zip(list(range(2,9)),ncircuits):
             G=nx.DiGraph(nx.complete_graph(n))
             assert_equal(len(nx.simple_cycles(G)),c)
         

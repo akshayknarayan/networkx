@@ -300,7 +300,7 @@ def set_node_attributes(G,name,attributes):
     >>> G.node[1]['betweenness']
     1.0
     """
-    for node,value in attributes.items():
+    for node,value in list(attributes.items()):
         G.node[node][name]=value
 
 def get_node_attributes(G,name):
@@ -325,7 +325,7 @@ def get_node_attributes(G,name):
     >>> color[1]
     'red'
     """
-    return dict( (n,d[name]) for n,d in G.node.items() if name in d)
+    return dict( (n,d[name]) for n,d in list(G.node.items()) if name in d)
 
 
 def set_edge_attributes(G,name,attributes):
@@ -349,7 +349,7 @@ def set_edge_attributes(G,name,attributes):
     >>> G[1][2]['betweenness']
     2.0
     """
-    for (u,v),value in attributes.items():
+    for (u,v),value in list(attributes.items()):
         G[u][v][name]=value
 
 def get_edge_attributes(G,name):

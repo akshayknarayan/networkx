@@ -522,8 +522,8 @@ def bipartite_gnmk_random_graph(n, m, k, seed=None, directed=False):
     return G
 
 def _add_nodes_with_bipartite_label(G, lena, lenb):
-    G.add_nodes_from(range(0,lena+lenb))
-    b=dict(zip(range(0,lena),[0]*lena))
-    b.update(dict(zip(range(lena,lena+lenb),[1]*lenb)))
+    G.add_nodes_from(list(range(0,lena+lenb)))
+    b=dict(list(zip(list(range(0,lena)),[0]*lena)))
+    b.update(dict(list(zip(list(range(lena,lena+lenb)),[1]*lenb))))
     nx.set_node_attributes(G,'bipartite',b)
     return G

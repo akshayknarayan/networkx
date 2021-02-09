@@ -101,12 +101,12 @@ def tree_graph(data):
             grandchildren = data.get('children',[])
             if grandchildren:
                 add_children(child,grandchildren)
-            nodedata = dict((str(k),v) for k,v in data.items() 
+            nodedata = dict((str(k),v) for k,v in list(data.items()) 
                             if k!='id' and k!='children')
             graph.add_node(child,attr_dict=nodedata)
     root = data['id']
     children = data.get('children',[])
-    nodedata = dict((k,v) for k,v in data.items() 
+    nodedata = dict((k,v) for k,v in list(data.items()) 
                     if k!='id' and k!='children')
     graph.add_node(root, attr_dict=nodedata)
     add_children(root, children)

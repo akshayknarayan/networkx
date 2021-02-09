@@ -25,13 +25,13 @@ except ImportError:
     pass
 
 try:
-    hd='H' + unichr(252) + 'sker D' + unichr(252)
-    mh='Mot' + unichr(246) + 'rhead'
-    mc='M' + unichr(246) + 'tley Cr' + unichr(252) + 'e'
-    st='Sp' + unichr(305) + 'n' + unichr(776) + 'al Tap'
-    q='Queensr' + unichr(255) + 'che'
-    boc='Blue ' + unichr(214) +'yster Cult'
-    dt='Deatht' + unichr(246) + 'ngue'
+    hd='H' + chr(252) + 'sker D' + chr(252)
+    mh='Mot' + chr(246) + 'rhead'
+    mc='M' + chr(246) + 'tley Cr' + chr(252) + 'e'
+    st='Sp' + chr(305) + 'n' + chr(776) + 'al Tap'
+    q='Queensr' + chr(255) + 'che'
+    boc='Blue ' + chr(214) +'yster Cult'
+    dt='Deatht' + chr(246) + 'ngue'
 except NameError:
     hd='H' + chr(252) + 'sker D' + chr(252)
     mh='Mot' + chr(246) + 'rhead'
@@ -64,7 +64,7 @@ for n in G.nodes():
     if n not in H:
         print(False)
 
-print(G.nodes())
+print((G.nodes()))
 
 try:
     pos=NX.spring_layout(G)

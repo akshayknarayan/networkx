@@ -63,6 +63,6 @@ def test_small_graph_false():
 
 def test_iterable():
     G = nx.path_graph(4)
-    seq = iter(G.degree().values())
+    seq = iter(list(G.degree().values()))
     assert_true(nx.is_valid_degree_sequence(seq, method='hh'))
     assert_true(nx.is_valid_degree_sequence(seq, method='eg'))

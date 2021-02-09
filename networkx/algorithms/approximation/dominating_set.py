@@ -74,7 +74,7 @@ def min_weighted_dominating_set(G, weight=None):
 
     while vertices:
         # find the most cost effective set, and the vertex that for that set
-        dom_node, min_set = min(sets.items(),
+        dom_node, min_set = min(list(sets.items()),
                                 key=lambda x: (x[0], _cost(x[1])))
         alpha = _cost(min_set)
 
