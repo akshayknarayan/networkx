@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
-from fractions import gcd
+from math import gcd
 import networkx as nx
 """Algorithms for directed acyclic graphs (DAGs)."""
-#    Copyright (C) 2006-2011 by 
+#    Copyright (C) 2006-2011 by
 #    Aric Hagberg <hagberg@lanl.gov>
 #    Dan Schult <dschult@colgate.edu>
 #    Pieter Swart <swart@lanl.gov>
@@ -13,7 +13,7 @@ __author__ = """\n""".join(['Aric Hagberg <aric.hagberg@gmail.com>',
                             'Ben Edwards (bedwards@cs.unm.edu)'])
 __all__ = ['descendants',
            'ancestors',
-           'topological_sort', 
+           'topological_sort',
            'topological_sort_recursive',
            'is_directed_acyclic_graph',
            'is_aperiodic']
@@ -55,9 +55,9 @@ def ancestors(G, source):
     return anc
 
 def is_directed_acyclic_graph(G):
-    """Return True if the graph G is a directed acyclic graph (DAG) or 
+    """Return True if the graph G is a directed acyclic graph (DAG) or
     False if not.
-    
+
     Parameters
     ----------
     G : NetworkX graph
@@ -110,7 +110,7 @@ def topological_sort(G,nbunch=None):
 
     References
     ----------
-    .. [1] Skiena, S. S. The Algorithm Design Manual  (Springer-Verlag, 1998). 
+    .. [1] Skiena, S. S. The Algorithm Design Manual  (Springer-Verlag, 1998).
         http://www.amazon.com/exec/obidos/ASIN/0387948600/ref=ase_thealgorithmrepo/
     """
     if not G.is_directed():
@@ -119,13 +119,13 @@ def topological_sort(G,nbunch=None):
 
     # nonrecursive version
     seen = set()
-    order = [] 
-    explored = set() 
-                     
+    order = []
+    explored = set()
+
     if nbunch is None:
-        nbunch = G.nodes_iter() 
+        nbunch = G.nodes_iter()
     for v in nbunch:     # process all vertices in G
-        if v in explored: 
+        if v in explored:
             continue
         fringe = [v]   # nodes yet to look at
         while fringe:
@@ -211,13 +211,13 @@ def topological_sort_recursive(G,nbunch=None):
     for v in nbunch:
         if v not in explored:
             _dfs(v)
-            
+
     return list(reversed(order))
 
 def is_aperiodic(G):
     """Return True if G is aperiodic.
 
-    A directed graph is aperiodic if there is no integer k > 1 that 
+    A directed graph is aperiodic if there is no integer k > 1 that
     divides the length of every cycle in the graph.
 
     Parameters
